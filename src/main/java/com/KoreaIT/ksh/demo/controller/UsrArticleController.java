@@ -59,11 +59,11 @@ public class UsrArticleController {
 
 	}
 
-	@RequestMapping("/usr/article/doAdd")
+	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public Article doAdd(String title, String body) {
-
-		Article article = articleService.writeArticle(title, body);
+	public Article doWrite(String title, String body) {
+		int id = articleService.writeArticle(title, body);
+		Article article = articleService.getArticleById(id);
 
 		return article;
 	}
