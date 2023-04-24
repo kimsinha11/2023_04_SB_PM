@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.ksh.demo.service.ArticleService;
+import com.KoreaIT.ksh.demo.util.Ut;
 import com.KoreaIT.ksh.demo.vo.Article;
+import com.KoreaIT.ksh.demo.vo.ResultData;
 
 @Controller
 public class UsrArticleController {
@@ -32,15 +34,15 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-	public Object getArticle(int id) {
+	public ResultData getArticle(int id) {
 
 		Article article = articleService.getArticleById(id);
 
 		if (article == null) {
-			return id + "번글은 존재하지 않습니다.";
+			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 		}
 		
-		return article;
+		return ResultData.from("F-1", Ut.f("S-1", "%d번 게시물 입니다",id), article);
 	}
 
 
@@ -61,18 +63,27 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public Article doWrite(String title, String body) {
-		int id = articleService.writeArticle(title, body);
+	public ResultData doWrite(String title, String body) {
+		if (Ut.empty(title)) {
+			return ResultData.from("F-1", "제목을 입력해주세요");
+		}
+		if (Ut.empty(body)) {
+			return ResultData.from("F-2", "내용을 입력해주세요");
+		}
+
+		ResultData writeArticleRd = articleService.writeArticle(title, body);
+
+		int id = (int) writeArticleRd.getData1();
+
 		Article article = articleService.getArticleById(id);
 
-		return article;
+		return ResultData.from(writeArticleRd.getResultCode(), writeArticleRd.getMsg(), article);
 	}
-
 	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
-	public List<Article> getArticles() {
-
-		return articleService.getArticles();
+	public ResultData getArticles() {
+		List<Article> articles = articleService.getArticles();
+		return ResultData.from("S-1", "Article List", articles);
 	}
 
 }
