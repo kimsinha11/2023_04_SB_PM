@@ -51,8 +51,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/write")
 
 	public String write(Model model, String title, String body) {
-	
-
+		
 		return "usr/article/write";
 	}
 

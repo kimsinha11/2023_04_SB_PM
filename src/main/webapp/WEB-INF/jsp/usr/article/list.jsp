@@ -15,7 +15,7 @@
 <section class="mt-10 text-xs">
 		<div class="mx-auto overflow-x-auto w-full">
 				<table class="table-box-type-1 table w-full"
-						style="border-collaspe: collaspe; width: 700px; background-color: pink;" border=2px>
+						style="border-collaspe: collaspe; width: 700px;" >
 						<thead>
 
 								<tr>
@@ -87,4 +87,3 @@
         <a href="?boardId=${board.id}&pageNum=${totalPages}&itemsPerPage=${itemsPerPage}">▶▶</a>
     </c:if>
 </div>
-
