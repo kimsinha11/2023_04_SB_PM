@@ -48,15 +48,6 @@ boolean isLogined = rq.isLogined();
 				<%
 				}
 				%>
-				<%
-				if (isLogined) {
-				%>
-				<div style="border: 1px solid black; display: inline-block; width: 7%; text-align: center;">
-						<a style="display: block;" href="/usr/member/logout">로그아웃</a>
-				</div>
-				<%
-				}
-				%>
 				<div class="list" style="border: 1px solid black; display: inline-block; width: 7%; text-align: center;">
 						<a style="display: block;" href="/usr/article/list">리스트</a>
 							<ul>
@@ -65,6 +56,18 @@ boolean isLogined = rq.isLogined();
 								<li><a href="/usr/article/list?boardId=3">QnA</a></li>
 							</ul>
 				</div>
+				<%
+				if (isLogined) {
+				%>
+				<div style="border: 1px solid black; display: inline-block; width: 7%; text-align: center;">
+						<a style="display: block;" href="/usr/member/logout">로그아웃</a>
+				</div>
+				<div style="border: 1px solid black; display: inline-block; width: 7%; text-align: center;">
+						<a style="display: block;" href="#">${rq.loginedMember.nickname }</a>
+				</div>
+				<%
+				}
+				%>
 			
 		</div>
 
