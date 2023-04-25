@@ -65,8 +65,8 @@
     <c:if test="${pageNum > 1}">
         <a href="?boardId=${board.id}&pageNum=1&itemsPerPage=${itemsPerPage}">◀◀</a>
     </c:if>
-    <c:if test="${pageNum > 1}">
-        <a class="btn-text-link btn btn-outline btn-xs" href="?boardId=${board.id}&pageNum=${pageNum - 1}&itemsPerPage=${itemsPerPage}">이전</a>
+    <c:if test="${pageNum > 10}">
+        <a class="btn-text-link btn btn-outline btn-xs" href="?boardId=${board.id}&pageNum=${pageNum - 10}&itemsPerPage=${itemsPerPage}">이전</a>
     </c:if>
     <c:forEach var="i" begin="1" end="${totalPages}" varStatus="status">
         <c:if test="${status.index >= ((pageNum-1) / 10) * 10 && status.index < ((pageNum-1) / 10 + 1) * 10}">
@@ -81,7 +81,7 @@
         </c:if>
     </c:forEach>
     <c:if test="${pageNum < totalPages}">
-        <a class="btn-text-link btn btn-outline btn-xs" href="?boardId=${board.id}&pageNum=${pageNum + 1}&itemsPerPage=${itemsPerPage}">다음</a>
+        <a class="btn-text-link btn btn-outline btn-xs" href="?boardId=${board.id}&pageNum=${pageNum + 10}&itemsPerPage=${itemsPerPage}">다음</a>
     </c:if>
     <c:if test="${pageNum < totalPages}">
         <a href="?boardId=${board.id}&pageNum=${totalPages}&itemsPerPage=${itemsPerPage}">▶▶</a>
