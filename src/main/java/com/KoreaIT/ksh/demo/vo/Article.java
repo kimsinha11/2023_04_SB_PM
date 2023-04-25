@@ -1,7 +1,5 @@
 package com.KoreaIT.ksh.demo.vo;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +8,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Article {
-	
 	private int id;
-	private LocalDateTime regDate;
-	private LocalDateTime updateDate;
+	private String regDate;
+	private String updateDate;
 	private String title;
 	private String body;
-	
+	private int memberId;
+	private String name;
+	private int boardId;
+//	private boolean actorCanDelete;
 }

@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-namespace="com.KoreaIT.ksh.demo.repository.ArticleRepository">
+	namespace="com.KoreaIT.ksh.demo.repository.ArticleRepository">
+
 
 	<insert id="writeArticle">
 		INSERT INTO article
@@ -10,20 +11,34 @@ namespace="com.KoreaIT.ksh.demo.repository.ArticleRepository">
 		updateDate=
 		NOW(),
 		title =#{title},
-		`body`= #{body}
+		`body`= #{body},
+		memberId = #{memberId},
+		boardId = #{boardId}
 	</insert>
 
-	<select id="getArticles" resultType="Article">
-		SELECT *
-		FROM article
-		ORDER BY
-		id DESC
-	</select>
+<select id="getArticles" resultType="Article">
+    SELECT article.id, article.regDate, article.updateDate, article.title,
+    article.body, article.memberId, article.boardId, board.id, member.name
+    AS 'name'
+    FROM article
+    INNER JOIN `member`
+    ON article.memberId =
+    member.id
+    INNER JOIN board
+    ON article.boardId = board.id
+    WHERE board.id = #{boardId}
+    ORDER BY article.id DESC
+    LIMIT #{i}, #{itemsPerPage}
+</select>
 
-	<select id="getArticleById" resultType="Article">
-		SELECT *
+	<select id="getArticle" resultType="Article">
+		SELECT article.id,
+		article.regDate, article.updateDate, article.title, article.body,
+		article.memberId, member.name AS 'name'
 		FROM article
-		WHERE id
+		INNER JOIN `member`
+		ON article.memberId = member.id
+		WHERE article.id
 		= #{id}
 	</select>
 
@@ -35,13 +50,16 @@ namespace="com.KoreaIT.ksh.demo.repository.ArticleRepository">
 
 	<update id="modifyArticle">
 		UPDATE article
-		SET updateDate= NOW(),
-		title = #{title},
-		`body` = #{body}
+		<set>
+			<if test="title != null and title != ''">title = #{title},</if>
+			<if test="body != null and body != ''">`body` = #{body},</if>
+			updateDate= NOW()
+		</set>
 		WHERE id = #{id}
 	</update>
 
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
+
 </mapper>
