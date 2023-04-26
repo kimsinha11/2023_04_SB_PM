@@ -33,3 +33,4 @@ Article article = (Article) request.getAttribute("article");
 	<button class="btn-text-link btn btn-outline btn-xs" style="display: inline" type="submit"> 수정하기</button>
 		</div>
 </form>
+<%@ include file="../common/foot.jspf"%>

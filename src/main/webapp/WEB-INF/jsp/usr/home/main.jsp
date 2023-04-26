@@ -17,3 +17,5 @@ div {
 		src="https://image.aladin.co.kr/product/8555/38/cover500/g592438753_1.jpg"
 		alt="" />
 </div>
+
+<%@ include file="../common/foot.jspf"%>

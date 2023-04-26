@@ -45,3 +45,5 @@ Article article = (Article) request.getAttribute("article");
 
   </div>
 </form>
+
+<%@ include file="../common/foot.jspf"%>

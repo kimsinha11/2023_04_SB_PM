@@ -73,3 +73,5 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 
 
 </section>
+
+<%@ include file="../common/foot.jspf"%>
