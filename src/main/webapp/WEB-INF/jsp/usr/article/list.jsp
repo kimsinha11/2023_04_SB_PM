@@ -60,37 +60,40 @@
 </section>
 
 <div class="pagination flex justify-center mt-3">
+	<c:set var="baseUri2"
+		value="itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}" />
 	<c:if test="${pageNum > 1}">
-		<a
-			href="?boardId=${board.id}&pageNum=1&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}">◀◀</a>
+		<a href="?boardId=${board.id}&pageNum=1&${baseUri2 }">◀◀</a>
 	</c:if>
 	<c:if test="${pageNum > 10}">
 		<a class="btn-text-link btn btn-outline btn-xs"
-			href="?boardId=${board.id}&pageNum=${pageNum - 10}&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}">이전</a>
+			href="?boardId=${board.id}&pageNum=${pageNum - 10}&${baseUri2 }">이전</a>
 	</c:if>
+
 	<c:forEach var="i" begin="1" end="${totalPages}" varStatus="status">
+		<c:set var="baseUri"
+			value="?boardId=${board.id}&pageNum=${i}&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}" />
+
 		<c:if
 			test="${status.index >= ((pageNum-1) / 10) * 10 && status.index < ((pageNum-1) / 10 + 1) * 10}">
 			<c:choose>
 				<c:when test="${i == pageNum}">
 					<a class="btn-text-link btn btn-outline btn-xs active"
-						href="?boardId=${board.id}&pageNum=${i}&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}">${i}</a>
+						href="${baseUri }">${i}</a>
 				</c:when>
 				<c:otherwise>
-					<a class="btn-text-link btn btn-outline btn-xs"
-						href="?boardId=${board.id}&pageNum=${i}&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}">${i}</a>
+					<a class="btn-text-link btn btn-outline btn-xs" href="${baseUri }">${i}</a>
 				</c:otherwise>
 			</c:choose>
 		</c:if>
 	</c:forEach>
 	<c:if test="${pageNum < totalPages && totalPages - pageNum >= 10}">
 		<a class="btn-text-link btn btn-outline btn-xs"
-			href="?boardId=${board.id}&pageNum=${pageNum + 10}&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}">다음</a>
+			href="?boardId=${board.id}&pageNum=${pageNum + 10}&${baseUri2 }">다음</a>
 	</c:if>
 
 	<c:if test="${pageNum < totalPages}">
-		<a
-			href="?boardId=${board.id}&pageNum=${totalPages}&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}">▶▶</a>
+		<a href="?boardId=${board.id}&pageNum=${totalPages}&${baseUri2 }">▶▶</a>
 	</c:if>
 </div>
 <br />
