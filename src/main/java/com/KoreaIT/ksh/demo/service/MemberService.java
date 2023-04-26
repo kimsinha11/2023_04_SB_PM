@@ -50,4 +50,8 @@ public class MemberService {
 		return memberRepository.getMemberById(id);
 	}
 
+	public Member profile(int id) {
+		return memberRepository.profile(id);
+	}
+
 }

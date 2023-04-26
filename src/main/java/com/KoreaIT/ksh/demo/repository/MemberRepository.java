@@ -1,6 +1,5 @@
 package com.KoreaIT.ksh.demo.repository;
 
-
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -9,6 +8,14 @@ import com.KoreaIT.ksh.demo.vo.Member;
 
 @Mapper
 public interface MemberRepository {
+
+	@Select("""
+			SELECT *
+			FROM member
+			WHERE member.id
+			= #{id}
+				""")
+	Member profile(int id);
 
 	@Insert("""
 			INSERT INTO `member`

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.ksh.demo.service.MemberService;
 import com.KoreaIT.ksh.demo.util.Ut;
+import com.KoreaIT.ksh.demo.vo.Article;
 import com.KoreaIT.ksh.demo.vo.Member;
 import com.KoreaIT.ksh.demo.vo.ResultData;
 import com.KoreaIT.ksh.demo.vo.Rq;
@@ -113,6 +114,21 @@ public class UsrMemberController {
 		Member member = memberService.getMemberById(joinRd.getData1());
 
 		return String.format("<script>alert('회원가입 성공.'); location.replace('../article/list');</script>");
+	}
+
+	@RequestMapping("/usr/member/profile")
+	public String profile(Model model, int id) {
+		id = rq.getLoginedMemberId();
+		Member member = memberService.profile(id);
+
+		if (member == null) {
+			return rq.jsHistoryBackOnView(Ut.f("%d번 글은 존재하지 않습니다", id));
+		}
+
+		model.addAttribute("member", member);
+		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
+
+		return "usr/member/profile";
 	}
 
 }

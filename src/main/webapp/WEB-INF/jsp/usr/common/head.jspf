@@ -63,7 +63,7 @@ boolean isLogined = rq.isLogined();
 						<a style="display: block;" href="/usr/member/logout">로그아웃</a>
 				</div>
 				<div style="border: 1px solid black; display: inline-block; width: 7%; text-align: center;">
-						<a style="display: block;" href="#">${rq.loginedMember.nickname }</a>
+						<a style="display: block;" href="/usr/member/profile?id=${rq.loginedMember.id }">${rq.loginedMember.nickname }</a>
 				</div>
 				<%
 				}
