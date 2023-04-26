@@ -38,7 +38,10 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 										<th style="font-size: 15px">내용</th>
 										<th>${article.body }</th>
 								</tr>
-
+								<tr>
+										<th style="font-size: 15px">조회수</th>
+										<th>${article.hitCount }</th>
+								</tr>
 
 						</thead>
 

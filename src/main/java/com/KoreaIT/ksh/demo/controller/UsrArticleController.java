@@ -120,7 +120,7 @@ public class UsrArticleController {
 	    
 	
 
-	    int totalCount = articleService.getArticlesCount(boardId);
+	    int totalCount = articleService.getArticlesCount(boardId, searchId, searchKeyword);
 	    int totalPages = (int) Math.ceil((double)totalCount / itemsPerPage);
 	    int lastPageInGroup = (int) Math.min(((pageNum - 1) / 10 * 10 + 10), totalPages);
 	    int itemsInAPage = (pageNum - 1) * itemsPerPage;
@@ -140,7 +140,7 @@ public class UsrArticleController {
   
 	@RequestMapping("/usr/article/detail")
 	public String getArticle(Model model, int id) {
-
+		articleService.increaseHitCount(id);
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {

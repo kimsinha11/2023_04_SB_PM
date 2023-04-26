@@ -62,8 +62,13 @@ public class ArticleService {
 		return ResultData.from("S-1", "수정 가능");
 	}
 
-	public int getArticlesCount(Integer boardId) {
-		return articleRepository.getArticlesCount(boardId);
+	public int getArticlesCount(Integer boardId, Integer searchId, String searchKeyword) {
+		return articleRepository.getArticlesCount(boardId, searchId, searchKeyword);
+	}
+
+	public void increaseHitCount(int id) {
+		articleRepository.increaseHitCount(id);
+		
 	}
 
 

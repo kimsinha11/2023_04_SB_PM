@@ -16,5 +16,6 @@ public class Article {
 	private int memberId;
 	private String name;
 	private int boardId;
+	private int hitCount;
 //	private boolean actorCanDelete;
 }

@@ -30,6 +30,7 @@
 										<th style="font-size: 19px">날짜</th>
 										<th style="font-size: 19px">제목</th>
 										<th style="font-size: 19px">작성자</th>
+										<th style="font-size: 19px">조회수</th>
 								</tr>
 						</thead>
 						<tbody>
@@ -48,6 +49,7 @@
 														<a href="detail?id=${article.id }">${article.title }</a>
 												</th>
 												<th>${article.name }</th>
+												<th>${article.hitCount }</th>
 										</tr>
 								</c:forEach>
 						</tbody>
@@ -63,32 +65,32 @@
 
 <div class="pagination flex justify-center mt-3">
     <c:if test="${pageNum > 1}">
-        <a href="?boardId=${board.id}&pageNum=1&itemsPerPage=${itemsPerPage}">◀◀</a>
+        <a href="?boardId=${board.id}&pageNum=1&itemsPerPage=${itemsPerPage}&searchKeyword=${searchKeyword}">◀◀</a>
     </c:if>
     <c:if test="${pageNum > 10}">
-        <a class="btn-text-link btn btn-outline btn-xs" href="?boardId=${board.id}&pageNum=${pageNum - 10}&itemsPerPage=${itemsPerPage}">이전</a>
+        <a class="btn-text-link btn btn-outline btn-xs" href="?boardId=${board.id}&pageNum=${pageNum - 10}&itemsPerPage=${itemsPerPage}&searchKeyword=${searchKeyword}">이전</a>
     </c:if>
     <c:forEach var="i" begin="1" end="${totalPages}" varStatus="status">
         <c:if test="${status.index >= ((pageNum-1) / 10) * 10 && status.index < ((pageNum-1) / 10 + 1) * 10}">
             <c:choose>
                 <c:when test="${i == pageNum}">
-                    <a class="btn-text-link btn btn-outline btn-xs active" href="?boardId=${board.id}&pageNum=${i}&itemsPerPage=${itemsPerPage}">${i}</a>
+                    <a class="btn-text-link btn btn-outline btn-xs active" href="?boardId=${board.id}&pageNum=${i}&itemsPerPage=${itemsPerPage}&searchKeyword=${searchKeyword}">${i}</a>
                 </c:when>
                 <c:otherwise>
-                    <a class="btn-text-link btn btn-outline btn-xs" href="?boardId=${board.id}&pageNum=${i}&itemsPerPage=${itemsPerPage}">${i}</a>
+                    <a class="btn-text-link btn btn-outline btn-xs" href="?boardId=${board.id}&pageNum=${i}&itemsPerPage=${itemsPerPage}&searchKeyword=${searchKeyword}">${i}</a>
                 </c:otherwise>
             </c:choose>
         </c:if>
     </c:forEach>
     <c:if test="${pageNum < totalPages}">
-        <a class="btn-text-link btn btn-outline btn-xs" href="?boardId=${board.id}&pageNum=${pageNum + 10}&itemsPerPage=${itemsPerPage}">다음</a>
+        <a class="btn-text-link btn btn-outline btn-xs" href="?boardId=${board.id}&pageNum=${pageNum + 10}&itemsPerPage=${itemsPerPage}&searchKeyword=${searchKeyword}">다음</a>
     </c:if>
     <c:if test="${pageNum < totalPages}">
-        <a href="?boardId=${board.id}&pageNum=${totalPages}&itemsPerPage=${itemsPerPage}">▶▶</a>
+        <a href="?boardId=${board.id}&pageNum=${totalPages}&itemsPerPage=${itemsPerPage}&searchKeyword=${searchKeyword}">▶▶</a>
     </c:if>
 </div>
 
-<form style="text-align: center;" method="get" action="list">
+<form style="text-align: center;" method="get" action="list" >
   <div>
     <select class="select select-bordered max-w-xs" name="searchId">
       <option disabled selected>제목+내용</option>

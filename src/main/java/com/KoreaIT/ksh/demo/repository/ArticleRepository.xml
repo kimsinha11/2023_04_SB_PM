@@ -19,7 +19,7 @@
 
 	<select id="getArticles" resultType="Article">
 		SELECT article.id, article.regDate, article.updateDate, article.title,
-		article.body, article.memberId, article.boardId, board.id, member.name
+		article.body, article.memberId, article.boardId, article.hitCount,board.id, member.name
 		AS 'name'
 		FROM article
 		INNER JOIN `member`
@@ -44,13 +44,15 @@
 			</choose>
 		</if>
 		ORDER BY article.id DESC
-		LIMIT #{i}, #{itemsPerPage}
+		<if test="i >= 0">
+				LIMIT #{i}, #{itemsPerPage}
+			</if>
 	</select>
 
 	<select id="getArticle" resultType="Article">
 		SELECT article.id,
 		article.regDate, article.updateDate, article.title, article.body,
-		article.memberId, member.name AS 'name'
+		article.memberId, article.hitCount, member.name AS 'name'
 		FROM article
 		INNER JOIN `member`
 		ON article.memberId = member.id
@@ -77,5 +79,10 @@
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
-
+	
+	<update id ="increaseHitCount">
+	UPDATE article
+	SET hitCount = hitCount + 1
+	WHERE id = #{id}
+	</update>
 </mapper>
