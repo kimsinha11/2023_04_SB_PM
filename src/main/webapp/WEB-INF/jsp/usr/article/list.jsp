@@ -96,9 +96,10 @@
 <form style="text-align: center;" method="get" action="list">
 		<div>
 				<select data-value="${param.searchId}" name ="searchId" class="select select-bordered max-w-xs">
-						<option disabled selected>제목+내용</option>
+						<option disabled selected>선택</option>
 						<option value="1">제목</option>
 						<option value="2">내용</option>
+						<option value="3"> 제목+내용 </option>
 				</select>
 
 				<input type="hidden" name="boardId" value="${board.id}" />

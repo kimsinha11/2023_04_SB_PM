@@ -51,7 +51,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/write")
 
 	public String write(Model model, String title, String body) {
-		
+
 		return "usr/article/write";
 	}
 
@@ -80,11 +80,11 @@ public class UsrArticleController {
 		if (Ut.empty(body)) {
 			return Ut.jsHistoryBack("F-A", "내용을 입력해주세요");
 		}
-		
+
 		Board board = BoardService.getBoardById(boardId);
-		ResultData<Integer> writeArticleRd=articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
+		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
 		int id = (int) writeArticleRd.getData1();
-		return Ut.jsReplace("S-1", "작성완료", Ut.f("../article/detail?id=%d",id));
+		return Ut.jsReplace("S-1", "작성완료", Ut.f("../article/detail?id=%d", id));
 
 	}
 
@@ -107,40 +107,44 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, Integer boardId, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int itemsPerPage, String searchKeyword, Integer searchId) {
+	public String showList(Model model, Integer boardId, @RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(defaultValue = "10") int itemsPerPage, String searchKeyword, Integer searchId) {
 
-	    if(boardId == null) {
-	        boardId = 1;
-	    }
-	    Board board = BoardService.getBoardById(boardId);
+		if (boardId == null) {
+			boardId = 1;
+		}
+		Board board = BoardService.getBoardById(boardId);
 
-	    if(board == null) {
-	        return rq.jsHistoryBackOnView("그런 게시판은 없어");
-	    }
-	    
-	
+		if (board == null) {
+			return rq.jsHistoryBackOnView("그런 게시판은 없어");
+		}
 
-	    int totalCount = articleService.getArticlesCount(boardId, searchId, searchKeyword);
-	    int totalPages = (int) Math.ceil((double)totalCount / itemsPerPage);
-	    int lastPageInGroup = (int) Math.min(((pageNum - 1) / 10 * 10 + 10), totalPages);
-	    int itemsInAPage = (pageNum - 1) * itemsPerPage;
-	    List<Article> articles = articleService.getArticles(boardId, itemsInAPage, itemsPerPage, searchKeyword, searchId);
+		int totalCount = articleService.getArticlesCount(boardId, searchId, searchKeyword);
+		int totalPages = (int) Math.ceil((double) totalCount / itemsPerPage);
+		int lastPageInGroup = (int) Math.min(((pageNum - 1) / 10 * 10 + 10), totalPages);
+		int itemsInAPage = (pageNum - 1) * itemsPerPage;
+		List<Article> articles = articleService.getArticles(boardId, itemsInAPage, itemsPerPage, searchKeyword,
+				searchId);
 
-	    model.addAttribute("board", board);
+		model.addAttribute("board", board);
 
-	    model.addAttribute("articles", articles);
-	    model.addAttribute("totalCount", totalCount);
-	    model.addAttribute("totalPages", totalPages);
-	    model.addAttribute("pageNum", pageNum);
-	    model.addAttribute("itemsPerPage", itemsPerPage);
-	    model.addAttribute("lastPageInGroup", lastPageInGroup);
+		model.addAttribute("articles", articles);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("itemsPerPage", itemsPerPage);
+		model.addAttribute("lastPageInGroup", lastPageInGroup);
 
-	    return "usr/article/list";
+		return "usr/article/list";
 	}
-  
+
 	@RequestMapping("/usr/article/detail")
 	public String getArticle(Model model, int id) {
-		articleService.increaseHitCount(id);
+		ResultData increaseHitCountRd = articleService.increaseHitCount(id);
+
+		if (increaseHitCountRd.isFail()) {
+			return rq.jsHistoryBackOnView(increaseHitCountRd.getMsg());
+		}
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {

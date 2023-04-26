@@ -52,5 +52,5 @@ public interface ArticleRepository {
 
 	public int getArticlesCount(int boardId);
 
-	public void increaseHitCount(int id);
+	public int increaseHitCount(int id);
 }
