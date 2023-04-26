@@ -107,7 +107,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, Integer boardId, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int itemsPerPage) {
+	public String showList(Model model, Integer boardId, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int itemsPerPage, String searchKeyword, Integer searchId) {
 
 	    if(boardId == null) {
 	        boardId = 1;
@@ -117,12 +117,14 @@ public class UsrArticleController {
 	    if(board == null) {
 	        return rq.jsHistoryBackOnView("그런 게시판은 없어");
 	    }
+	    
+	
 
 	    int totalCount = articleService.getArticlesCount(boardId);
 	    int totalPages = (int) Math.ceil((double)totalCount / itemsPerPage);
 	    int lastPageInGroup = (int) Math.min(((pageNum - 1) / 10 * 10 + 10), totalPages);
 	    int itemsInAPage = (pageNum - 1) * itemsPerPage;
-	    List<Article> articles = articleService.getArticles(boardId, itemsInAPage, itemsPerPage);
+	    List<Article> articles = articleService.getArticles(boardId, itemsInAPage, itemsPerPage, searchKeyword, searchId);
 
 	    model.addAttribute("board", board);
 

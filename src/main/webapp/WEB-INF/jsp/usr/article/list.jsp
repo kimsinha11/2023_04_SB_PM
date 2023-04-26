@@ -87,3 +87,27 @@
         <a href="?boardId=${board.id}&pageNum=${totalPages}&itemsPerPage=${itemsPerPage}">▶▶</a>
     </c:if>
 </div>
+
+<form style="text-align: center;" method="get" action="list">
+  <div>
+    <select class="select select-bordered max-w-xs" name="searchId">
+      <option disabled selected>제목+내용</option>
+      <option value="1">제목</option>
+      <option value="2">내용</option>
+    </select>
+    <input class="input input-bordered w-full max-w-xs" type="text" name="searchKeyword" placeholder="검색어를 입력해주세요" />
+  </div>
+  
+   <script>
+      const searchSelect = document.getElementsByName("searchId")[0];
+      const searchdInput = document.getElementsByName("searchId")[0];
+      searchSelect.onchange = function() {
+        var selectedValue = searchSelect.value;
+        searchdInput.value = selectedValue;
+      }
+    </script>
+    
+  <button class="btn-text-link btn btn-outline btn-xs" style="display: inline;" type="submit">검색</button>
+  <input type="hidden" name="boardId" value="${board.id}" />
+  <!-- pageNum과 itemsPerPage 파라미터는 제거하거나 기본값 설정 -->
+</form>
